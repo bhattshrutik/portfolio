@@ -88,7 +88,14 @@
         </div>
     </section>
 
-
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <!-- Experience -->
     <section id="experience" class="py-16 bg-gray-900 text-white">
