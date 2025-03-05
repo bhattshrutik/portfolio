@@ -21,7 +21,7 @@ mail = Mail(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return open('index.html').read()
 
 @app.route('/submit', methods=['POST'])
 def submit():
