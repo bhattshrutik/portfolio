@@ -25,20 +25,25 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    email = request.form.get('email')
-    message_body = request.form.get('message')
+    try:
+        email = request.form.get('email')
+        message_body = request.form.get('message')
 
-    if email and message_body:
-        try:
-            msg = Message("New Contact Form Submission", recipients=[app.config['MAIL_RECEIVER']])
-            msg.body = f"From: {email}\n\n{message_body}"
-            mail.send(msg)
-            print("Email sent successfully")  # Debugging
-        except Exception as e:
-            print(f"Error sending email: {e}")  # Debugging
-            return "Internal Server Error", 500  # Proper error handling
-    
-    return redirect(url_for('index'))  # Redirect back to home page
+        if not email or not message_body:
+            return redirect(url_for('index'))  # Redirect if form is empty
+
+        msg = Message("New Contact Form Submission", recipients=[app.config['MAIL_RECEIVER']])
+        msg.body = f"From: {email}\n\n{message_body}"
+        mail.send(msg)
+
+        print("Email sent successfully")  # Debugging
+
+        return redirect(url_for('index'))  # Redirect to the home page
+
+    except Exception as e:
+        print(f"Error: {e}")  # Print actual error
+        return "An error occurred. Please try again later.", 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
