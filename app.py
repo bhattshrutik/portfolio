@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mail import Mail, Message
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
 
 # Flask-Mail Configuration using .env variables
@@ -26,9 +29,14 @@ def submit():
     message_body = request.form.get('message')
 
     if email and message_body:
-        msg = Message("New Contact Form Submission", recipients=[app.config['MAIL_RECEIVER']])
-        msg.body = f"From: {email}\n\n{message_body}"
-        mail.send(msg)
+        try:
+            msg = Message("New Contact Form Submission", recipients=[app.config['MAIL_RECEIVER']])
+            msg.body = f"From: {email}\n\n{message_body}"
+            mail.send(msg)
+            print("Email sent successfully")  # Debugging
+        except Exception as e:
+            print(f"Error sending email: {e}")  # Debugging
+            return "Internal Server Error", 500  # Proper error handling
     
     return redirect(url_for('index'))  # Redirect back to home page
 
