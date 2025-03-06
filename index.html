@@ -327,38 +327,39 @@
             </div>
         </div>
     </footer>
+    
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Mobile Menu Toggle
-            const menuToggle = document.getElementById("menu-toggle");
-            const mobileMenu = document.getElementById("mobile-menu");
-    
-            if (menuToggle && mobileMenu) {
-                menuToggle.addEventListener("click", () => {
-                    mobileMenu.classList.toggle("hidden");
+    document.addEventListener("DOMContentLoaded", function () {
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener("click", () => {
+                mobileMenu.classList.toggle("hidden");
+            });
+        }
+
+        // Smooth Scroll & Active Link Highlight
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach((link) => link.classList.remove("nav-link-active"));
+                        const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                        if (activeLink) activeLink.classList.add("nav-link-active");
+                    }
                 });
-            }
-    
-            // Smooth Scroll & Active Link Highlight
-            const sections = document.querySelectorAll("section");
-            const navLinks = document.querySelectorAll(".nav-link");
-    
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            navLinks.forEach((link) => link.classList.remove("nav-link-active"));
-                            const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-                            if (activeLink) activeLink.classList.add("nav-link-active");
-                        }
-                    });
-                },
-                { threshold: 0.5 }
-            );
-    
-            sections.forEach((section) => observer.observe(section));
-        });
-        </script>
+            },
+            { threshold: 0.5 }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+    });
+    </script>
 </body>
 </html>
