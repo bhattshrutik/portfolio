@@ -277,38 +277,40 @@
     </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="py-20 text-center bg-gray-900 text-white">
         <h2 class="text-4xl font-semibold mb-6">Contact Me</h2>
         <p class="text-lg text-gray-300 mb-8">Have a question or want to work together? Drop me a message!</p>
-    <form id="contactForm" method="post" class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
-        <form action="https://your-vercel-app.vercel.app/submit" method="post">
-        <div class="mb-4">
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Your Email" 
-                class="w-full p-4 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                required
-            >
-        </div>
     
-        <div class="mb-4">
-            <textarea 
-                name="message" 
-                placeholder="Your Message" 
-                class="w-full p-4 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                rows="4" 
-                required
-            ></textarea>
-        </div>
+        <form id="contactForm" action="https://your-vercel-app.vercel.app/submit" method="post" class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Your Email" 
+                    class="w-full p-4 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                    required
+                >
+            </div>
     
-        <button type="submit" 
-            class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-3 rounded-lg font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300">
-            Send Message 🚀
-        </button>
-        
-        <p id="responseMessage" class="mt-4 text-white"></p> <!-- Success/Error Message -->
-    </form>
+            <div class="mb-4">
+                <textarea 
+                    name="message" 
+                    placeholder="Your Message" 
+                    class="w-full p-4 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                    rows="4" 
+                    required
+                ></textarea>
+            </div>
+    
+            <button type="submit" 
+                class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-3 rounded-lg font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300">
+                Send Message 🚀
+            </button>
+    
+            <p id="responseMessage" class="mt-4 text-white"></p> <!-- Success/Error Message -->
+        </form>
+    </section>
     
     
 
