@@ -1,7 +1,6 @@
-import traceback
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory,jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 from flask_mail import Mail, Message
 
 # Load environment variables
@@ -25,8 +24,6 @@ mail = Mail(app)
 def index():
     return render_template('index.html')
 
-import traceback  # Import for debugging
-
 @app.route('/submit', methods=['POST'])
 def submit():
     try:
@@ -34,18 +31,20 @@ def submit():
         message_body = request.form.get('message')
 
         if not email or not message_body:
-            return jsonify({"status": "error", "message": "Email and message are required!"}), 400
+            flash("Email and message are required!", "error")
+            return redirect(url_for('index'))
 
         msg = Message("New Contact Form Submission", recipients=[app.config['MAIL_RECEIVER']])
         msg.body = f"From: {email}\n\n{message_body}"
         mail.send(msg)
 
-        return jsonify({"status": "success", "message": "Message sent successfully!"}), 200
+        flash("Your message has been sent successfully!", "success")
+        return redirect(url_for('index'))
 
     except Exception as e:
         print(f"Error: {e}")  # Debugging
-        return jsonify({"status": "error", "message": "An error occurred. Please try again."}), 500
-
+        flash("An error occurred. Please try again later.", "error")
+        return redirect(url_for('index'))
 
 # Serve profile image and resume from the root directory
 @app.route('/<filename>')
