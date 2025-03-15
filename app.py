@@ -1,17 +1,13 @@
 import os
-from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 from flask_mail import Mail, Message
 
-# Load environment variables
-load_dotenv()
-
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')  # Required for flash messages
+app.secret_key = os.getenv('SECRET_KEY')  # Set secret key from GitHub Secrets
 
-# Flask-Mail Configuration using .env variables
+# Flask-Mail Configuration using GitHub Secrets
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
-app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))  # Default to 587 if not set
 app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
@@ -46,7 +42,6 @@ def submit():
         flash("An error occurred. Please try again later.", "error")
         return redirect(url_for('index'))
 
-# Serve profile image and resume from the root directory
 @app.route('/<filename>')
 def serve_file(filename):
     return send_from_directory(os.getcwd(), filename)
