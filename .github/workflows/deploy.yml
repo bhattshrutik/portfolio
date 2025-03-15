@@ -1,0 +1,36 @@
+name: Deploy Flask App
+
+on:
+  push:
+    branches:
+      - main  # Runs workflow on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Set Environment Variables
+      run: |
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+        echo "MAIL_SERVER=${{ secrets.MAIL_SERVER }}" >> $GITHUB_ENV
+        echo "MAIL_PORT=${{ secrets.MAIL_PORT }}" >> $GITHUB_ENV
+        echo "MAIL_USE_TLS=${{ secrets.MAIL_USE_TLS }}" >> $GITHUB_ENV
+        echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> $GITHUB_ENV
+        echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> $GITHUB_ENV
+        echo "MAIL_RECEIVER=${{ secrets.MAIL_RECEIVER }}" >> $GITHUB_ENV
+
+    - name: Run Flask App
+      run: python app.py
